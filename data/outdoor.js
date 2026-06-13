@@ -46,6 +46,7 @@ const OUTDOOR_ACTIVITIES = [
     category: "outdoor",
     duration: "3–4 h",
     tip: "Book with FIRMM for the most ethical experience.",
-    link: "https://www.firmm.org"
+    link: "https://www.firmm.org",
+    buttonLabel: "Book Your Boat Trip"
   }
 ];
