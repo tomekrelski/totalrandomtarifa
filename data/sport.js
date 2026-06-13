@@ -14,7 +14,8 @@ const SPORT_ACTIVITIES = [
     category: "sport",
     duration: "3 h",
     tip: "Book at any beach school. Levante wind days are best.",
-    link: "https://www.tarifakitesurf.com"
+    link: "https://www.tarifakitesurf.com",
+    buttonLabel: "Reserve Your Kite Lesson"
   },
   {
     name: "Windsurfing Try-Out",
