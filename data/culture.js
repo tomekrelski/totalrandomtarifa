@@ -29,7 +29,8 @@ const CULTURE_ACTIVITIES = [
     category: "culture",
     duration: "1 h",
     tip: "Check opening hours — it's not open every day.",
-    link: "https://maps.google.com/?q=Castillo+de+Guzman+el+Bueno+Tarifa"
+    link: "https://maps.google.com/?q=Castillo+de+Guzman+el+Bueno+Tarifa",
+    buttonLabel: "Plan Your Visit"
   },
   {
     name: "Iglesia de San Mateo",
