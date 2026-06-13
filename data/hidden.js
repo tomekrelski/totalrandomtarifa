@@ -29,7 +29,8 @@ const HIDDEN_ACTIVITIES = [
     category: "hidden",
     duration: "Open-ended",
     tip: "Bring a coffee as an excuse to stop and chat.",
-    link: "https://maps.google.com/?q=Puerto+pesquero+Tarifa"
+    link: "https://maps.google.com/?q=Puerto+pesquero+Tarifa",
+    buttonLabel: "Head to the Port"
   },
   {
     name: "Night Walk on Los Lances",
