@@ -552,15 +552,15 @@
     a._id = a.category + '-' + i + '-' + a.name.replace(/\s+/g,'_');
   });
 
-  // ── "NOT FOR ME" — hidden items, kept for this session ────
+  // ── "NOT FOR ME" — permanently hidden items (this browser) ─
   var hiddenIds = [];
   try {
-    var stored = sessionStorage.getItem('trt_hidden');
+    var stored = localStorage.getItem('trt_hidden');
     if (stored) hiddenIds = JSON.parse(stored);
   } catch (e) { hiddenIds = []; }
 
   function saveHidden() {
-    try { sessionStorage.setItem('trt_hidden', JSON.stringify(hiddenIds)); } catch (e) {}
+    try { localStorage.setItem('trt_hidden', JSON.stringify(hiddenIds)); } catch (e) {}
   }
 
   // ── HEADLINE ─────────────────────────────────────────────
@@ -580,6 +580,7 @@
   // ── REVEAL ───────────────────────────────────────────────
   var isSpinning = false;
   var currentPick = null;
+  var DEFAULT_BTN_LABEL = 'Start Your Adventure';
 
   function getPool() {
     var pool = activeCategory === 'all'
@@ -592,12 +593,29 @@
     if (isSpinning) return;
     var filtered = getPool();
 
-    // if everything in this category was marked "not for me", reset and try again
     if (!filtered.length) {
-      hiddenIds = [];
-      saveHidden();
-      filtered = getPool();
-      if (!filtered.length) return;
+      // every activity in this selection has been marked "not for me"
+      document.getElementById('r-name').textContent = "You've seen it all!";
+      document.getElementById('r-desc').textContent =
+        "You've marked everything in this category as 'not for me'. Try a different mission type, or come back later.";
+      document.getElementById('r-dur').textContent = '—';
+      document.getElementById('r-cat').textContent = activeCategory.toUpperCase();
+      document.getElementById('r-tip').textContent = 'Pick another category above to keep exploring.';
+
+      var advBtn = document.getElementById('adventure-btn');
+      advBtn.href = '#';
+      advBtn.style.display = 'none';
+
+      currentPick = null;
+
+      var wrap = document.getElementById('result-wrap');
+      wrap.classList.remove('visible');
+      wrap.offsetWidth;
+      wrap.classList.add('visible');
+      setTimeout(function() {
+        wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
+      return;
     }
 
     isSpinning = true;
@@ -620,7 +638,14 @@
       document.getElementById('r-dur').textContent  = currentPick.duration;
       document.getElementById('r-cat').textContent  = currentPick.category.toUpperCase();
       document.getElementById('r-tip').textContent  = currentPick.tip;
-      document.getElementById('adventure-btn').href = currentPick.link || '#';
+
+      var advBtn = document.getElementById('adventure-btn');
+      advBtn.style.display = 'flex';
+      advBtn.href = currentPick.link || '#';
+      var label = currentPick.buttonLabel && currentPick.buttonLabel.trim()
+        ? currentPick.buttonLabel.trim()
+        : DEFAULT_BTN_LABEL;
+      advBtn.querySelector('span').textContent = label;
 
       var wrap = document.getElementById('result-wrap');
       wrap.classList.remove('visible');
