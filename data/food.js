@@ -14,7 +14,8 @@ const FOOD_ACTIVITIES = [
     category: "food",
     duration: "1 h",
     tip: "Ask locals which bar does the best tataki.",
-    link: "https://maps.google.com/?q=restaurante+atun+rojo+Tarifa"
+    link: "https://maps.google.com/?q=restaurante+atun+rojo+Tarifa",
+    buttonLabel: "Find a Restaurant"
   },
   {
     name: "Moroccan Tea in the Old Town",
