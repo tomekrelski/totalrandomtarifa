@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOTAL RANDOM TARIFA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Righteous&family=Russo+One&family=Anton&family=Bangers&family=Oswald:wght@700&family=Lobster&family=Pacifico&family=Permanent+Marker&family=Black+Han+Sans&family=Boogaloo&family=Fredoka+One&family=Lilita+One&family=Squada+One&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand:   #f5e6c8;
+      --sand2:  #e8d4a8;
+      --sky:    #7ec8e3;
+      --sky2:   #4aa8c8;
+      --sea:    #1a7fa0;
+      --sea2:   #0f5f7a;
+      --sun:    #f4a820;
+      --sun2:   #e8850a;
+      --coral:  #e05a3a;
+      --white:  #fefcf7;
+      --text:   #2a3f4a;
+      --textlt: #4a6070;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--sand);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .wave-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background: linear-gradient(180deg,
+        #d4eef8 0%, #b8e0f0 18%, #e8d8b0 42%, #f5e6c8 65%, #f0d8a0 100%);
+    }
+    .wave-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.35) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.6;
+    }
+
+    .site-wrap {
+      position: relative; z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      padding: 48px 16px 28px;
+    }
+
+    /* "TOTAL RANDOM" — two words, each word its own line of mixed letters */
+    .title-line {
+      display: flex;
+      flex-wrap: nowrap;         /* keep each word on one line */
+      justify-content: center;
+      align-items: baseline;
+      overflow: visible;
+      white-space: nowrap;
+    }
+
+    /* Each word scales to fit screen width */
+    .title-line-total  { margin-bottom: 2px; }
+    .title-line-random { margin-bottom: 8px; }
+
+    .title-letter {
+      display: inline-block;
+      font-size: clamp(28px, 8vw, 82px);
+      line-height: 0.95;
+      transition: transform 0.18s;
+      cursor: default;
+    }
+    .title-letter:hover { transform: translateY(-6px) rotate(-5deg) scale(1.1) !important; }
+
+    /* Fonts */
+    .tl-bebas   { font-family: 'Bebas Neue', sans-serif; }
+    .tl-bangers { font-family: 'Bangers', cursive; }
+    .tl-anton   { font-family: 'Anton', sans-serif; }
+    .tl-russo   { font-family: 'Russo One', sans-serif; }
+    .tl-right   { font-family: 'Righteous', cursive; }
+    .tl-oswald  { font-family: 'Oswald', sans-serif; font-weight: 700; }
+    .tl-lobster { font-family: 'Lobster', cursive; }
+    .tl-pacif   { font-family: 'Pacifico', cursive; }
+    .tl-marker  { font-family: 'Permanent Marker', cursive; }
+    .tl-boogal  { font-family: 'Boogaloo', cursive; }
+    .tl-fredoka { font-family: 'Fredoka One', cursive; }
+    .tl-lilita  { font-family: 'Lilita One', cursive; }
+    .tl-squada  { font-family: 'Squada One', cursive; }
+
+    /* Colors */
+    .tc-sea2  { color: var(--sea2); }
+    .tc-coral { color: var(--coral); }
+    .tc-sun2  { color: var(--sun2); }
+    .tc-sea   { color: var(--sea); }
+    .tc-sky2  { color: var(--sky2); }
+    .tc-sand2 { color: #c47a2a; }
+
+    /* Size nudges — make letters feel uneven */
+    .ts-xl  { font-size: clamp(36px, 10vw, 102px); }
+    .ts-sm  { font-size: clamp(22px,  6vw,  62px); }
+    .ts-md  { font-size: clamp(30px,  8.5vw, 88px); }
+
+    /* Rotation nudges */
+    .tr-l2  { transform: rotate(-2deg); display: inline-block; }
+    .tr-l5  { transform: rotate(-5deg); display: inline-block; }
+    .tr-l8  { transform: rotate(-8deg); display: inline-block; }
+    .tr-r3  { transform: rotate(3deg);  display: inline-block; }
+    .tr-r6  { transform: rotate(6deg);  display: inline-block; }
+    .tr-up  { transform: translateY(-6px); display: inline-block; }
+    .tr-dn  { transform: translateY(5px);  display: inline-block; }
+
+    /* TARIFA — big single-font word below */
+    .title-tarifa {
+      display: block;
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(36px, 10vw, 100px);
+      color: var(--coral);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+    }
+
+    /* slogan */
+    .slogan-wrap {
+      margin: 26px auto 0;
+      max-width: 560px;
+      min-height: 46px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #slogan {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(14px, 2.1vw, 18px);
+      font-weight: 600;
+      font-style: italic;
+      color: var(--sea2);
+      text-align: center;
+      line-height: 1.4;
+      animation: fadeUp 0.7s ease;
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      color: var(--sea);
+      opacity: 0.55;
+      text-align: center;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    /* ── QUESTION MARK ── */
+    .qmark-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4px 0 32px;
+    }
+
+    .qmark-ring {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    /* breathing rings */
+    .qmark-ring::before, .qmark-ring::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .qmark-ring::before {
+      inset: -16px;
+      border: 2px solid var(--sky2);
+      animation: breatheRing1 5.5s ease-in-out infinite;
+    }
+    .qmark-ring::after {
+      inset: -32px;
+      border: 1.5px solid var(--sky);
+      animation: breatheRing2 5.5s ease-in-out infinite;
+    }
+
+    /* slow breath — inhale 2.5s, hold, exhale 2.5s */
+    @keyframes breatheRing1 {
+      0%   { transform: scale(0.94); opacity: 0.15; }
+      40%  { transform: scale(1.04); opacity: 0.55; }
+      55%  { transform: scale(1.04); opacity: 0.5;  }
+      100% { transform: scale(0.94); opacity: 0.15; }
+    }
+    @keyframes breatheRing2 {
+      0%   { transform: scale(0.92); opacity: 0.0;  }
+      40%  { transform: scale(1.06); opacity: 0.3;  }
+      55%  { transform: scale(1.06); opacity: 0.28; }
+      100% { transform: scale(0.92); opacity: 0.0;  }
+    }
+
+    .qmark-ring.spinning::before,
+    .qmark-ring.spinning::after { animation: none; opacity: 0; }
+
+    #qmark-btn {
+      width: 152px;
+      height: 152px;
+      border-radius: 50%;
+      border: 3px solid var(--sea);
+      background: linear-gradient(145deg, var(--white), var(--sand2));
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: transform 0.15s;
+      /* button itself breathes too */
+      animation: breatheBtn 5.5s ease-in-out infinite;
+    }
+
+    @keyframes breatheBtn {
+      0%   { box-shadow: 0 2px 12px rgba(26,127,160,0.15), 0 1px 4px rgba(0,0,0,0.08), inset 0 1px 2px rgba(255,255,255,0.7); transform: scale(0.97); }
+      40%  { box-shadow: 0 6px 32px rgba(26,127,160,0.38), 0 3px 10px rgba(0,0,0,0.12), inset 0 1px 3px rgba(255,255,255,0.9); transform: scale(1.02); }
+      55%  { box-shadow: 0 6px 28px rgba(26,127,160,0.33), 0 3px 8px rgba(0,0,0,0.11), inset 0 1px 3px rgba(255,255,255,0.85); transform: scale(1.02); }
+      100% { box-shadow: 0 2px 12px rgba(26,127,160,0.15), 0 1px 4px rgba(0,0,0,0.08), inset 0 1px 2px rgba(255,255,255,0.7); transform: scale(0.97); }
+    }
+
+    #qmark-btn:hover {
+      animation: none;
+      transform: scale(1.08);
+      box-shadow: 0 8px 40px rgba(26,127,160,0.5), 0 4px 12px rgba(0,0,0,0.15), inset 0 1px 3px rgba(255,255,255,0.9);
+    }
+    #qmark-btn:active { transform: scale(0.91) !important; }
+
+    #qmark-btn.spinning {
+      animation: qSpin 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+    }
+    @keyframes qSpin {
+      0%   { transform: rotate(0deg)   scale(1);    }
+      25%  { transform: rotate(130deg) scale(0.68); }
+      60%  { transform: rotate(315deg) scale(1.14); }
+      80%  { transform: rotate(352deg) scale(0.97); }
+      100% { transform: rotate(360deg) scale(1);    }
+    }
+
+    .qmark-char {
+      font-family: 'Fredoka One', cursive;
+      font-size: 70px;
+      line-height: 1;
+      width: 100%;
+      text-align: center;
+      color: var(--sea);
+      user-select: none;
+      pointer-events: none;
+      animation: breatheChar 5.5s ease-in-out infinite;
+    }
+    @keyframes breatheChar {
+      0%,100% { opacity: 0.75; }
+      40%,55% { opacity: 1; }
+    }
+    #qmark-btn.spinning .qmark-char { animation: none; opacity: 0.18; }
+
+    /* ── CATEGORY BUTTONS ── */
+    .cat-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      width: 100%;
+      max-width: 480px;
+    }
+    .cat-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 16px 10px;
+      background: rgba(255,255,255,0.65);
+      border: 2px solid var(--sky2);
+      color: var(--sea2);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.18s;
+      text-align: center;
+    }
+    .cat-btn:hover { background: var(--sky2); color: var(--white); border-color: var(--sky2); }
+    .cat-btn.active { background: var(--sea); color: var(--white); border-color: var(--sea); box-shadow: 0 3px 14px rgba(26,127,160,0.35); }
+
+    .cat-btn[data-cat="food"]    { border-color: var(--sun2); color: var(--sun2); }
+    .cat-btn[data-cat="food"]:hover    { background: var(--sun2); color: var(--white); border-color: var(--sun2); }
+    .cat-btn[data-cat="food"].active   { background: var(--sun2); color: var(--white); border-color: var(--sun2); box-shadow: 0 3px 14px rgba(232,133,10,0.35); }
+
+    .cat-btn[data-cat="sport"]   { border-color: var(--coral); color: var(--coral); }
+    .cat-btn[data-cat="sport"]:hover   { background: var(--coral); color: var(--white); border-color: var(--coral); }
+    .cat-btn[data-cat="sport"].active  { background: var(--coral); color: var(--white); border-color: var(--coral); box-shadow: 0 3px 14px rgba(224,90,58,0.35); }
+
+    .cat-btn[data-cat="culture"] { border-color: var(--sea2); color: var(--sea2); }
+    .cat-btn[data-cat="culture"]:hover { background: var(--sea2); color: var(--white); border-color: var(--sea2); }
+    .cat-btn[data-cat="culture"].active{ background: var(--sea2); color: var(--white); border-color: var(--sea2); box-shadow: 0 3px 14px rgba(15,95,122,0.35); }
+
+    .cat-btn[data-cat="hidden"]  { border-color: #7a5c3a; color: #7a5c3a; }
+    .cat-btn[data-cat="hidden"]:hover  { background: #7a5c3a; color: var(--white); border-color: #7a5c3a; }
+    .cat-btn[data-cat="hidden"].active { background: #7a5c3a; color: var(--white); border-color: #7a5c3a; box-shadow: 0 3px 14px rgba(122,92,58,0.35); }
+
+    /* ── RESULT CARD ── */
+    #result-wrap {
+      width: 100%;
+      max-width: 580px;
+      margin: 36px auto 0;
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+      pointer-events: none;
+    }
+    #result-wrap.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+
+    .result-card {
+      background: rgba(255,252,247,0.93);
+      border: 2px solid var(--sky2);
+      border-radius: 8px;
+      padding: 30px 28px 24px;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(26,127,160,0.14), 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .result-card::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; height: 4px;
+      background: linear-gradient(90deg, var(--sea), var(--sky2), var(--sun));
+      border-radius: 8px 8px 0 0;
+    }
+
+    .result-name {
+      font-family: 'Russo One', sans-serif;
+      font-size: clamp(22px, 5vw, 36px);
+      color: var(--sea2);
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+      line-height: 1.1;
+    }
+    .result-desc {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+    .result-meta {
+      display: flex; gap: 20px; flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .meta-item { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--textlt); }
+    .meta-item span { color: var(--sea); }
+    .result-tip {
+      font-size: 13px;
+      color: var(--sun2);
+      border-left: 3px solid var(--sun);
+      padding-left: 12px;
+      font-style: italic;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .result-tip::before { content: 'TIP — '; font-style: normal; font-weight: 700; opacity: 0.8; }
+
+    .adventure-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 16px 28px;
+      background: linear-gradient(135deg, var(--sea), var(--sky2));
+      color: var(--white);
+      border: none; border-radius: 6px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; text-decoration: none;
+      box-shadow: 0 4px 20px rgba(26,127,160,0.38);
+      transition: all 0.2s;
+      margin-bottom: 10px;
+    }
+    .adventure-btn:hover {
+      background: linear-gradient(135deg, var(--sea2), var(--sea));
+      box-shadow: 0 6px 28px rgba(26,127,160,0.52);
+      transform: translateY(-1px);
+    }
+    .adventure-btn .btn-arrow { font-size: 18px; transition: transform 0.2s; }
+    .adventure-btn:hover .btn-arrow { transform: translateX(5px); }
+
+    /* secondary actions row */
+    .action-row {
+      display: flex;
+      gap: 10px;
+    }
+    .reroll-btn,
+    .notint-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 12px 14px;
+      background: transparent;
+      border: 2px solid rgba(26,127,160,0.3);
+      color: var(--sea); border-radius: 6px;
+      cursor: pointer;
+      flex: 1;
+      transition: all 0.2s; opacity: 0.7;
+      text-align: center;
+    }
+    .reroll-btn:hover { border-color: var(--sea); opacity: 1; background: rgba(26,127,160,0.06); }
+    .notint-btn { border-color: rgba(224,90,58,0.35); color: var(--coral); }
+    .notint-btn:hover { border-color: var(--coral); opacity: 1; background: rgba(224,90,58,0.06); }
+
+    footer {
+      text-align: center;
+      padding: 40px 0 16px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--sea); opacity: 0.35;
+    }
+
+    @media (max-width: 480px) {
+      header { padding: 32px 12px 20px; }
+      .cat-buttons { max-width: 100%; gap: 9px; }
+      .cat-btn { font-size: 12px; padding: 14px 8px; }
+      .result-card { padding: 22px 16px 20px; }
+      .adventure-btn { font-size: 11px; letter-spacing: 0.12em; padding: 14px 14px; }
+      #qmark-btn { width: 128px; height: 128px; }
+      .qmark-char { font-size: 60px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wave-bg"></div>
+<div class="site-wrap">
+
+  <header>
+    <!-- TOTAL RANDOM — mixed fonts, two lines -->
+    <div class="title-line title-line-total"  id="line-total"></div>
+    <div class="title-line title-line-random" id="line-random"></div>
+    <!-- TARIFA — single word, single font -->
+    <span class="title-tarifa">Tarifa</span>
+    <div class="slogan-wrap"><p id="slogan"></p></div>
+  </header>
+
+  <div class="qmark-section">
+
+    <div class="qmark-ring" id="qmark-ring">
+      <button id="qmark-btn" aria-label="Reveal a random adventure">
+        <span class="qmark-char">?</span>
+      </button>
+    </div>
+
+    <div class="section-label">Select your mission type</div>
+    <div class="cat-buttons">
+      <button class="cat-btn active" data-cat="all">All</button>
+      <button class="cat-btn" data-cat="outdoor">Outdoor</button>
+      <button class="cat-btn" data-cat="food">Food</button>
+      <button class="cat-btn" data-cat="sport">Sport</button>
+      <button class="cat-btn" data-cat="culture">Culture</button>
+      <button class="cat-btn" data-cat="hidden">Hidden</button>
+    </div>
+
+    <div id="result-wrap">
+      <div class="result-card">
+        <div class="result-name" id="r-name"></div>
+        <div class="result-desc" id="r-desc"></div>
+        <div class="result-meta">
+          <div class="meta-item">Duration: <span id="r-dur"></span></div>
+          <div class="meta-item">Type: <span id="r-cat"></span></div>
+        </div>
+        <div class="result-tip" id="r-tip"></div>
+        <a id="adventure-btn" class="adventure-btn" href="#" target="_blank" rel="noopener">
+          <span>Start Your Unbowed Adventure</span>
+          <span class="btn-arrow">→</span>
+        </a>
+        <div class="action-row">
+          <button class="reroll-btn" id="reroll-btn">⟳ &nbsp; Reveal Another</button>
+          <button class="notint-btn" id="notint-btn">Not for me</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Total Random Tarifa &nbsp;·&nbsp; Get off your phone &nbsp;·&nbsp; Go outside</footer>
+</div>
+
+<script src="headlines.js"></script>
+<script src="data/outdoor.js"></script>
+<script src="data/sport.js"></script>
+<script src="data/food.js"></script>
+<script src="data/culture.js"></script>
+<script src="data/hidden.js"></script>
+<script>
+  // ── MIXED FONT TITLE ─────────────────────────────────────
+  var WORD_CONFIGS = [
+    {
+      id: 'line-total',
+      letters: [
+        { ch:'T', cls:'tl-bebas   tc-sea2  ts-xl  tr-l2'  },
+        { ch:'O', cls:'tl-lobster tc-coral        tr-r3'  },
+        { ch:'T', cls:'tl-squada  tc-sun2  ts-sm  tr-l5'  },
+        { ch:'A', cls:'tl-marker  tc-sea   ts-xl  tr-r6'  },
+        { ch:'L', cls:'tl-anton   tc-sky2         tr-l2'  }
+      ]
+    },
+    {
+      id: 'line-random',
+      letters: [
+        { ch:'R', cls:'tl-fredoka tc-coral ts-xl  tr-r3'  },
+        { ch:'A', cls:'tl-oswald  tc-sea2  ts-sm  tr-l8'  },
+        { ch:'N', cls:'tl-bangers tc-sun2  ts-xl  tr-r6'  },
+        { ch:'D', cls:'tl-pacif   tc-sea          tr-l2'  },
+        { ch:'O', cls:'tl-lilita  tc-coral ts-sm  tr-r3'  },
+        { ch:'M', cls:'tl-russo   tc-sky2  ts-xl  tr-l5'  }
+      ]
+    }
+  ];
+
+  WORD_CONFIGS.forEach(function(word) {
+    var el = document.getElementById(word.id);
+    word.letters.forEach(function(cfg) {
+      var span = document.createElement('span');
+      span.className = 'title-letter ' + cfg.cls.replace(/\s+/g,' ').trim();
+      span.textContent = cfg.ch;
+      el.appendChild(span);
+    });
+  });
+
+  // ── COMBINE ALL CATEGORY DATA ─────────────────────────────
+  var ATTRACTIONS = []
+    .concat(OUTDOOR_ACTIVITIES)
+    .concat(SPORT_ACTIVITIES)
+    .concat(FOOD_ACTIVITIES)
+    .concat(CULTURE_ACTIVITIES)
+    .concat(HIDDEN_ACTIVITIES);
+
+  // assign a stable id to each item (used for "not interested")
+  ATTRACTIONS.forEach(function(a, i) {
+    a._id = a.category + '-' + i + '-' + a.name.replace(/\s+/g,'_');
+  });
+
+  // ── "NOT FOR ME" — hidden items, kept for this session ────
+  var hiddenIds = [];
+  try {
+    var stored = sessionStorage.getItem('trt_hidden');
+    if (stored) hiddenIds = JSON.parse(stored);
+  } catch (e) { hiddenIds = []; }
+
+  function saveHidden() {
+    try { sessionStorage.setItem('trt_hidden', JSON.stringify(hiddenIds)); } catch (e) {}
+  }
+
+  // ── HEADLINE ─────────────────────────────────────────────
+  document.getElementById('slogan').textContent =
+    HEADLINES[Math.floor(Math.random() * HEADLINES.length)];
+
+  // ── CATEGORIES ───────────────────────────────────────────
+  var activeCategory = 'all';
+  document.querySelectorAll('.cat-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeCategory = btn.dataset.cat;
+    });
+  });
+
+  // ── REVEAL ───────────────────────────────────────────────
+  var isSpinning = false;
+  var currentPick = null;
+
+  function getPool() {
+    var pool = activeCategory === 'all'
+      ? ATTRACTIONS
+      : ATTRACTIONS.filter(function(a) { return a.category === activeCategory; });
+    return pool.filter(function(a) { return hiddenIds.indexOf(a._id) === -1; });
+  }
+
+  function reveal() {
+    if (isSpinning) return;
+    var filtered = getPool();
+
+    // if everything in this category was marked "not for me", reset and try again
+    if (!filtered.length) {
+      hiddenIds = [];
+      saveHidden();
+      filtered = getPool();
+      if (!filtered.length) return;
+    }
+
+    isSpinning = true;
+    var ring = document.getElementById('qmark-ring');
+    var btn  = document.getElementById('qmark-btn');
+
+    ring.classList.add('spinning');
+    btn.classList.remove('spinning');
+    btn.offsetWidth;
+    btn.classList.add('spinning');
+
+    setTimeout(function() {
+      btn.classList.remove('spinning');
+      ring.classList.remove('spinning');
+      isSpinning = false;
+
+      currentPick = filtered[Math.floor(Math.random() * filtered.length)];
+      document.getElementById('r-name').textContent = currentPick.name;
+      document.getElementById('r-desc').textContent = currentPick.desc;
+      document.getElementById('r-dur').textContent  = currentPick.duration;
+      document.getElementById('r-cat').textContent  = currentPick.category.toUpperCase();
+      document.getElementById('r-tip').textContent  = currentPick.tip;
+      document.getElementById('adventure-btn').href = currentPick.link || '#';
+
+      var wrap = document.getElementById('result-wrap');
+      wrap.classList.remove('visible');
+      wrap.offsetWidth;
+      wrap.classList.add('visible');
+
+      setTimeout(function() {
+        wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
+    }, 620);
+  }
+
+  function notInterested() {
+    if (currentPick) {
+      hiddenIds.push(currentPick._id);
+      saveHidden();
+    }
+    reveal();
+  }
+
+  document.getElementById('qmark-btn').addEventListener('click', reveal);
+  document.getElementById('reroll-btn').addEventListener('click', reveal);
+  document.getElementById('notint-btn').addEventListener('click', notInterested);
+</script>
+</body>
+</html>
